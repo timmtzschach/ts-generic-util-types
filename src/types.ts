@@ -1,7 +1,7 @@
-export type AllKeys<T> = T extends T ? keyof T : never;
+export type Keys<T> = T extends T ? keyof T : never;
 
-export type UnionObjectsToIntersection<UnionObjs> = {
-    [UnionObjsKeys in AllKeys<UnionObjs>]: Extract<UnionObjs, { [UnionObjs in UnionObjsKeys]: unknown}>[UnionObjsKeys]
+export type UnionObjectsToIntersection<Union> = {
+    [UnionKeys in Keys<Union>]: Extract<Union, { [KeysOfUnionKey in UnionKeys]: unknown; }>[UnionKeys];
 };
 
 export type PickByType<Obj extends object, Type> = {
@@ -9,5 +9,5 @@ export type PickByType<Obj extends object, Type> = {
 };
 
 export type ObjectToUnion<Obj extends object> = {
-    [ObjKey in keyof Obj]: { [ObjKey2 in ObjKey]: Obj[ObjKey]; };
+    [ObjKey in keyof Obj]: { [NestedObjKey in ObjKey]: Obj[ObjKey]; };
 }[keyof Obj];
